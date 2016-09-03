@@ -229,6 +229,10 @@ void Mutex::ReaderUnlock() { assert(mutex_-- > 0); }
 
 #elif defined(OS_WINDOWS)
 
+#if defined(WINRT)
+#define InitializeCriticalSection(a) InitializeCriticalSectionEx(a, 0, 0)
+#endif
+
 Mutex::Mutex() : destroy_(true) {
   InitializeCriticalSection(&mutex_);
   SetIsSafe();

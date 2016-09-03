@@ -246,6 +246,7 @@ inline void MakeTmpdir(std::string* path) {
   mkdir(path->c_str());
 }
 #elif defined(_MSC_VER)
+#if !defined(WINRT) // TODO (winrt): Temp dir on WinRT?
 #include <direct.h>
 inline void MakeTmpdir(std::string* path) {
   if (!path->empty()) {
@@ -259,6 +260,7 @@ inline void MakeTmpdir(std::string* path) {
   *path = std::string(tmppath_buffer) + "gflags_unittest";
   _mkdir(path->c_str());
 }
+#endif
 #else
 inline void MakeTmpdir(std::string* path) {
   if (!path->empty()) {
@@ -341,7 +343,7 @@ inline std::string StringPrintf(const char* format, ...) {
 
 inline bool SafeGetEnv(const char *varname, std::string &valstr)
 {
-#if defined(_MSC_VER) && _MSC_VER >= 1400
+#if defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(WINRT)
 	char  *val;
 	size_t sz;
 	if (_dupenv_s(&val, &sz, varname) != 0 || !val) return false;
