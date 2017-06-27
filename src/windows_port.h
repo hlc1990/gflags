@@ -73,14 +73,6 @@ extern int GFLAGS_DLL_DECL safe_vsnprintf(char *str, size_t size,
 #endif
 #endif  /* #if !defined(__MINGW32__) && !defined(__MINGW64__) */
 
-#if defined(WINRT) // TODO (winrt): Environment variables?
-inline char* getenv(const char* name) {
-  return NULL;
-}
-
-inline void setenv(const char* name, const char* value, int) {
-}
-#else
 #ifdef _MSC_VER
 #  pragma warning(push)
 #  pragma warning(disable: 4996) // ignore getenv security warning
@@ -108,7 +100,6 @@ inline void setenv(const char* name, const char* value, int) {
 }
 #ifdef _MSC_VER
 #  pragma warning(pop)
-#endif
 #endif
 
 #define strcasecmp _stricmp
