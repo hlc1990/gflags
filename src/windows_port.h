@@ -73,7 +73,7 @@ extern int GFLAGS_DLL_DECL safe_vsnprintf(char *str, size_t size,
 #endif
 #endif  /* #if !defined(__MINGW32__) && !defined(__MINGW64__) */
 
-#if defined(WINRT) // TODO (winrt): Environment variables?
+#if defined(WINRT) || defined(RX64)// TODO (winrt): Environment variables?
 inline char* getenv(const char* name) {
   return NULL;
 }
